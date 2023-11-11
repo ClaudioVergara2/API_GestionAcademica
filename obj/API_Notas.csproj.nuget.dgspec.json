@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\API_Notas\\API_Notas.csproj": {}
+    "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\API_Notas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\API_Notas\\API_Notas.csproj": {
+    "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\API_Notas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\API_Notas\\API_Notas.csproj",
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\API_Notas.csproj",
         "projectName": "API_Notas",
-        "projectPath": "C:\\Users\\User\\source\\repos\\API_Notas\\API_Notas.csproj",
+        "projectPath": "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\API_Notas.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\API_Notas\\obj\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -50,6 +50,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.13, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[6.0.16, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
