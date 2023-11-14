@@ -37,5 +37,22 @@ namespace API_Notas.Controllers
             }
             return Ok(listado);
         }
+        [HttpPost]
+        [Route("InsertarPerfil")]
+        public IActionResult InsertarPerfil(string nom)
+        {
+            try
+            {
+                Perfil perfil = new Perfil();
+                perfil.NomPerfil = nom;
+                _context.Perfils.Add(perfil);
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+            }
+        }
     }
 }
