@@ -45,13 +45,21 @@ namespace API_Notas.Controllers
         [Route("InsertarSemestre")]
         public IActionResult InsertarSemestre(string nom, int anio, int estado)
         {
-            Semestre st = new Semestre();
-            st.NomSemestre = nom;
-            st.AnioSemestre = anio;
-            st.Estado = estado;
-            _context.Semestres.Add(st);
-            _context.SaveChanges();
-            return Ok("Insertado");
+            try
+            {
+                Semestre st = new Semestre();
+                st.NomSemestre = nom;
+                st.AnioSemestre = anio;
+                st.Estado = estado;
+                _context.Semestres.Add(st);
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertadp correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+            }
         }
+        //EDITAR 
     }
 }

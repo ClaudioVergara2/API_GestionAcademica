@@ -43,12 +43,19 @@ namespace API_Notas.Controllers
         [Route("InsertarTipoAsignatura")]
         public IActionResult InsertarTipoAsignatura(string nomTipo, int cantidad)
         {
-            TipoAsignatura tipo = new TipoAsignatura();
-            tipo.NomTipoAsignatura = nomTipo;
-            tipo.CantidadNotas = cantidad;
-            _context.TipoAsignaturas.Add(tipo);
-            _context.SaveChanges();
-            return Ok("Insertado");
+            try
+            {
+                TipoAsignatura tipo = new TipoAsignatura();
+                tipo.NomTipoAsignatura = nomTipo;
+                tipo.CantidadNotas = cantidad;
+                _context.TipoAsignaturas.Add(tipo);
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+            }
         }
     }
 }
