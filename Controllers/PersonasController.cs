@@ -43,5 +43,25 @@ namespace API_Notas.Controllers
             }
             return Ok(listado);
         }
+        [HttpPost]
+        [Route("InsertarPersona")]
+        public IActionResult InsertarPersona(string rut, string nom, string ape)
+        {
+            try
+            {
+                Persona persona = new Persona();
+                persona.RutPersona = rut;
+                persona.NomPersona = nom;
+                persona.ApePersona = ape;
+                _context.Personas.Add(persona);
+                _context.SaveChanges();
+                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+            }
+        }
+        // FALTA EDITAR: Solo de edita nombre, apellido y fecha de nacimiento.
     }
 }

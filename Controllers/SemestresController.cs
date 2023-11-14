@@ -53,13 +53,13 @@ namespace API_Notas.Controllers
                 st.Estado = estado;
                 _context.Semestres.Add(st);
                 _context.SaveChanges();
-                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertadp correctamente" });
+                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
             }
         }
-        //EDITAR 
+        // FALTA EDITAR: Solo de edita el semestre
     }
 }
