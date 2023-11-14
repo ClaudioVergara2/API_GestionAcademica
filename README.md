@@ -12,5 +12,6 @@ El proyecto incluye las siguientes funcionalidades:
 - Semestres: Listar, insertar y editar.
 - Tipo Asignatura: Listar e insertar.
 - Cursos: Listar e insertar.
+- Asignatura: Listar e insertar.
 - Alumnos: Listar, insertar y editar.
 - Notas: Listar, insertar y editar.
