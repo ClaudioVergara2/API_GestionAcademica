@@ -45,21 +45,29 @@ namespace API_Notas.Controllers
         }
         [HttpPost]
         [Route("InsertarPersona")]
-        public IActionResult InsertarPersona(string rut, string nom, string ape)
+        public IActionResult InsertarPersona(string rut, string nom, string ape, int idPerfil)
         {
             try
             {
-                Persona persona = new Persona();
-                persona.RutPersona = rut;
-                persona.NomPersona = nom;
-                persona.ApePersona = ape;
+                if (!_context.Perfils.Any(p => p.IdPerfil == idPerfil))
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", respuesta = "El perfil especificado no existe." });
+                }
+                Persona persona = new Persona
+                {
+                    RutPersona = rut,
+                    NomPersona = nom,
+                    ApePersona = ape,
+                    IdPerfil = idPerfil
+                };
                 _context.Personas.Add(persona);
                 _context.SaveChanges();
+
                 return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
             }
         }
         // FALTA EDITAR: Solo de edita nombre, apellido y fecha de nacimiento.

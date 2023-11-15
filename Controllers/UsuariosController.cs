@@ -56,10 +56,8 @@ namespace API_Notas.Controllers
                     return BadRequest(new { mensaje = "Error", respuesta = "Nombre de usuario y contraseña son obligatorios." });
                 }
 
-                // Buscar el usuario en la base de datos
                 var usuario = _context.Usuarios.FirstOrDefault(u => u.NomUsuario == credenciales.NombreUsuario && u.Contraseña == credenciales.Contraseña);
 
-                // Verificar si el usuario fue encontrado
                 if (usuario == null)
                 {
                     return NotFound(new { mensaje = "Error", respuesta = "Usuario no encontrado o contraseña incorrecta." });
@@ -78,5 +76,35 @@ namespace API_Notas.Controllers
             public string NombreUsuario { get; set; }
             public string Contraseña { get; set; }
         }
+
+        [HttpPost]
+        [Route("InsertarUsuario")]
+        public IActionResult InsertarUsuario(string nom, string psw, string rut)
+        {
+            try
+            {
+                var personaExistente = _context.Personas.FirstOrDefault(p => p.RutPersona == rut);
+
+                if (personaExistente == null)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", respuesta = "La persona especificada no existe." });
+                }
+                Usuario usuario = new Usuario
+                {
+                    NomUsuario = nom,
+                    Contraseña = psw,
+                    RutPersona = rut
+                };
+                _context.Add(usuario);
+                _context.SaveChanges();
+
+                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
+            }
+        }
+
     }
 }
