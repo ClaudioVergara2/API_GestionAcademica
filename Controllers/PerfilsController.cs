@@ -6,27 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using API_Notas.Models;
+using Newtonsoft.Json;
 
 namespace API_Notas.Controllers
 {
-    public class PerfilsController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class PerfilsController : ControllerBase
     {
-        private readonly EvaluacionContext _context;
+        public readonly EvaluacionContext _context;
 
         public PerfilsController(EvaluacionContext context)
         {
             _context = context;
         }
+
         [HttpGet]
-        [Route("ListadoPerfil")]
-        public IActionResult ListadoPerfil()
+        [Route("ListadoPerfiles")]
+        public IActionResult ListadoPerfiles()
         {
             List<Perfil> listado = new List<Perfil>();
             var sql = from per in _context.Perfils
                       select new
                       {
                           per.IdPerfil,
-                          per.NomPerfil
+                          per.NomPerfil,
                       };
             foreach (var perf in sql)
             {
@@ -37,6 +41,7 @@ namespace API_Notas.Controllers
             }
             return Ok(listado);
         }
+
         [HttpPost]
         [Route("InsertarPerfil")]
         public IActionResult InsertarPerfil(string nom)
