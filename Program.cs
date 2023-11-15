@@ -3,18 +3,18 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-var builder = WebApplication.CreateBuilder(args);
-
 var accesoWEB = "_accesoWEB";
+
+var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: accesoWEB,
     policy =>
     {
-        policy.WithOrigins("https://localhost:44335/") //cambiar con la ip que tengan
-            .AllowAnyHeader()
-            .AllowAnyMethod();
+        policy.WithOrigins("https://localhost:44397")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -40,13 +40,12 @@ if (app.Environment.IsDevelopment())
     });
     app.UseDeveloperExceptionPage(); // Habilita la página de errores detallados en desarrollo
 }
+app.UseCors(accesoWEB);
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
-app.UseCors(accesoWEB);
 
 app.Run();
