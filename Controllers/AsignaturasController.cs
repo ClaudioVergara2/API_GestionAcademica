@@ -26,7 +26,7 @@ namespace API_Notas.Controllers
                       select new
                       {
                           c.CodAsignatura,
-                          c.NomAsdignatura,
+                          c.NomAsignatura,
                           c.IdSemestre,
                           c.IdTipoAsignatura
                       };
@@ -34,7 +34,7 @@ namespace API_Notas.Controllers
             {
                 Asignatura asignatura = new Asignatura();
                 asignatura.CodAsignatura = asig.CodAsignatura;
-                asignatura.NomAsdignatura = asig.NomAsdignatura;
+                asignatura.NomAsignatura = asig.NomAsignatura;
                 asignatura.IdSemestre = asig.IdSemestre;
                 asignatura.IdTipoAsignatura = asig.IdTipoAsignatura;
                 listado.Add(asignatura);
@@ -43,21 +43,35 @@ namespace API_Notas.Controllers
         }
         [HttpPost]
         [Route("InsertarAsignatura")]
-        public IActionResult InsertarAsignatura(string cod, string nom)
+        public IActionResult InsertarAsignatura(string cod, string nom, int idSemestre, int idTipoAsignatura)
         {
             try
             {
                 Asignatura asg = new Asignatura();
                 asg.CodAsignatura = cod;
-                asg.NomAsdignatura = nom;
+                asg.NomAsignatura = nom; // Asegúrate también de que esta propiedad esté escrita correctamente
+                asg.IdSemestre = idSemestre; // Asume que Asignatura tiene esta propiedad para la clave foránea
+                asg.IdTipoAsignatura = idTipoAsignatura; // Asume que Asignatura tiene esta propiedad para la clave foránea
+
+                // Verifica si los IDs de semestre y tipo asignatura existen
+                var semestreExists = _context.Semestres.Any(s => s.IdSemestre == idSemestre);
+                var tipoAsignaturaExists = _context.TipoAsignaturas.Any(t => t.IdTipoAsignatura == idTipoAsignatura);
+                if (!semestreExists || !tipoAsignaturaExists)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", detalle = "Semestre o tipo de asignatura no existen" });
+                }
+
                 _context.Asignaturas.Add(asg);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+                string innerMessage = ex.InnerException != null ? ex.InnerException.Message : "No inner exception";
+                // Considera registrar esta información en un log
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", detalle = ex.Message, detalleInterno = innerMessage });
             }
         }
+
     }
 }

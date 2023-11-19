@@ -75,21 +75,25 @@ public partial class EvaluacionContext : DbContext
                 .HasColumnName("COD_ASIGNATURA");
             entity.Property(e => e.IdSemestre).HasColumnName("ID_SEMESTRE");
             entity.Property(e => e.IdTipoAsignatura).HasColumnName("ID_TIPO_ASIGNATURA");
-            entity.Property(e => e.NomAsdignatura)
+            entity.Property(e => e.NomAsignatura)
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("NOM_ASDIGNATURA");
 
-            entity.HasOne(d => d.IdSemestreNavigation).WithMany(p => p.Asignaturas)
-                .HasForeignKey(d => d.IdSemestre)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ASIGNATURA_SEMESTRE");
+            entity.HasOne(d => d.IdSemestreNavigation)
+                  .WithMany(p => p.Asignaturas)
+                  .HasForeignKey(d => d.IdSemestre)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_ASIGNATURA_SEMESTRE");
 
-            entity.HasOne(d => d.IdTipoAsignaturaNavigation).WithMany(p => p.Asignaturas)
-                .HasForeignKey(d => d.IdTipoAsignatura)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ASIGNATURA_TIPO_ASIGNATURA");
+            entity.HasOne(d => d.IdTipoAsignaturaNavigation)
+                  .WithMany(p => p.Asignaturas)
+                  .HasForeignKey(d => d.IdTipoAsignatura)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_ASIGNATURA_TIPO_ASIGNATURA");
         });
+
+
 
         modelBuilder.Entity<Curso>(entity =>
         {

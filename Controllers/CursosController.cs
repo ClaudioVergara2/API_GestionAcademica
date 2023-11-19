@@ -21,6 +21,8 @@ namespace API_Notas.Controllers
         [Route("ListadoCursos")]
         public IActionResult ListadoCursos()
         {
+
+
             List<Curso> listado = new List<Curso>();
             var sql = from c in _context.Cursos
                       select new
@@ -40,6 +42,7 @@ namespace API_Notas.Controllers
             }
             return Ok(listado);
         }
+
         [HttpPost]
         [Route("InsertarCursos")]
         public IActionResult InsertarCursos(string rut, string cod, int seccion)

@@ -7,7 +7,7 @@ public partial class Asignatura
 {
     public string CodAsignatura { get; set; } = null!;
 
-    public string NomAsdignatura { get; set; } = null!;
+    public string NomAsignatura { get; set; } = null!;
 
     public int IdSemestre { get; set; }
 

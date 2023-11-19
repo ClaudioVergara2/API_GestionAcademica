@@ -45,7 +45,7 @@ namespace API_Notas.Controllers
         }
         [HttpPost]
         [Route("InsertarPersona")]
-        public IActionResult InsertarPersona(string rut, string nom, string ape, int idPerfil)
+        public IActionResult InsertarPersona(string rut, string nom, string ape, int idPerfil, DateTime fecha_nac)
         {
             try
             {
@@ -58,7 +58,8 @@ namespace API_Notas.Controllers
                     RutPersona = rut,
                     NomPersona = nom,
                     ApePersona = ape,
-                    IdPerfil = idPerfil
+                    IdPerfil = idPerfil,
+                    FechaNacimiento = fecha_nac
                 };
                 _context.Personas.Add(persona);
                 _context.SaveChanges();

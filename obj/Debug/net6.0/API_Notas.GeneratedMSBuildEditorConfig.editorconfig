@@ -9,93 +9,93 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = API_Notas
 build_property.RootNamespace = API_Notas
-build_property.ProjectDir = C:\Users\User\source\repos\API_GestionAcademica\
+build_property.ProjectDir = C:\Users\marti\Desktop\ProgWeb2\API_GestionAcademica\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\User\source\repos\API_GestionAcademica
+build_property.MSBuildProjectDirectory = C:\Users\marti\Desktop\ProgWeb2\API_GestionAcademica
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Perfils/Create.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Perfils/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Perfils/Delete.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Perfils/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Perfils/Details.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Perfils/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xEZXRhaWxzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Perfils/Edit.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Perfils/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Perfils/Index.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Perfils/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyZmlsc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Personas/Create.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Personas/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Personas/Delete.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Personas/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Personas/Details.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Personas/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Personas/Edit.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Personas/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Personas/Index.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Personas/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/TipoAsignaturas/Create.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/TipoAsignaturas/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb0FzaWduYXR1cmFzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/TipoAsignaturas/Delete.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/TipoAsignaturas/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb0FzaWduYXR1cmFzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/TipoAsignaturas/Details.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/TipoAsignaturas/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb0FzaWduYXR1cmFzXERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/TipoAsignaturas/Edit.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/TipoAsignaturas/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb0FzaWduYXR1cmFzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/TipoAsignaturas/Index.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/TipoAsignaturas/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGlwb0FzaWduYXR1cmFzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Usuarios/Create.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Usuarios/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Usuarios/Delete.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Usuarios/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Usuarios/Details.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Usuarios/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Usuarios/Edit.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Usuarios/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/User/source/repos/API_GestionAcademica/Views/Usuarios/Index.cshtml]
+[C:/Users/marti/Desktop/ProgWeb2/API_GestionAcademica/Views/Usuarios/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

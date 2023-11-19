@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\API_Notas.csproj": {}
+    "C:\\Users\\marti\\Desktop\\ProgWeb2\\API_GestionAcademica\\API_Notas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\API_Notas.csproj": {
+    "C:\\Users\\marti\\Desktop\\ProgWeb2\\API_GestionAcademica\\API_Notas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\API_Notas.csproj",
+        "projectUniqueName": "C:\\Users\\marti\\Desktop\\ProgWeb2\\API_GestionAcademica\\API_Notas.csproj",
         "projectName": "API_Notas",
-        "projectPath": "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\API_Notas.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\source\\repos\\API_GestionAcademica\\obj\\",
+        "projectPath": "C:\\Users\\marti\\Desktop\\ProgWeb2\\API_GestionAcademica\\API_Notas.csproj",
+        "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marti\\Desktop\\ProgWeb2\\API_GestionAcademica\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\marti\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.304\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -83,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.304\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

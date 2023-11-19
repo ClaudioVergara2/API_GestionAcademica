@@ -17,3 +17,10 @@ public partial class Curso
 
     public virtual Asignatura CodAsignaturaNavigation { get; set; } = null!;
 }
+public class CursoDTO
+{
+    public int IdCurso { get; set; }
+    public string RutPersona { get; set; }
+    public string CodAsignatura { get; set; }
+    public int Seccion { get; set; }
+}
