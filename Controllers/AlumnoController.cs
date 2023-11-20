@@ -55,4 +55,5 @@ public class AlumnoController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = innerMessage });
         }
     }
+    //falta eliminar alumno si este no tene notas.
 }

@@ -57,5 +57,6 @@ namespace API_Notas.Controllers
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
             }
         }
+
     }
 }

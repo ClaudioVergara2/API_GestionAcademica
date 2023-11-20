@@ -71,6 +71,37 @@ namespace API_Notas.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
             }
         }
+        [HttpPost]
+        [Route("EditarPersona")]
+        public IActionResult EditarPersona(string rut, string nuevoNombre, string nuevoApellido, DateTime nuevaFechaNac)
+        {
+            try
+            {
+                // Buscar la persona por RUT
+                var persona = _context.Personas.FirstOrDefault(p => p.RutPersona == rut);
+
+                // Verificar si la persona existe
+                if (persona == null)
+                {
+                    return NotFound(new { mensaje = "Persona no encontrada" });
+                }
+
+                // Actualizar los campos permitidos
+                persona.NomPersona = nuevoNombre;
+                persona.ApePersona = nuevoApellido;
+                persona.FechaNacimiento = nuevaFechaNac;
+
+                _context.Personas.Update(persona);
+                _context.SaveChanges();
+
+                return Ok(new { respuesta = "Persona actualizada correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
+            }
+        }
+
         // FALTA EDITAR: Solo de edita nombre, apellido y fecha de nacimiento.
     }
 }

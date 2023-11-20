@@ -60,6 +60,33 @@ namespace API_Notas.Controllers
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
             }
         }
-        // FALTA EDITAR: Solo de edita el semestre
+        [HttpPost]
+        [Route("EditarEstadoSemestre")]
+        public IActionResult EditarEstadoSemestre(int idSemestre, int nuevoEstado)
+        {
+            try
+            {
+                // Buscar el semestre por IdSemestre
+                var semestre = _context.Semestres.FirstOrDefault(s => s.IdSemestre == idSemestre);
+
+                // Verificar si el semestre existe
+                if (semestre == null)
+                {
+                    return NotFound(new { mensaje = "Semestre no encontrado" });
+                }
+
+                // Actualizar solo el campo Estado
+                semestre.Estado = nuevoEstado;
+                _context.Semestres.Update(semestre);
+                _context.SaveChanges();
+
+                return Ok(new { respuesta = "Estado actualizado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
+            }
+        }
+
     }
 }

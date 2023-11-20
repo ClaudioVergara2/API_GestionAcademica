@@ -56,4 +56,5 @@ public class NotasController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = innerMessage });
         }
     }
+    //falta validar la cantidad de notas dependiendo del tipo de asignatura
 }
