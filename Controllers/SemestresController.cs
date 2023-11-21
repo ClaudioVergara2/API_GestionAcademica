@@ -47,36 +47,79 @@ namespace API_Notas.Controllers
         {
             try
             {
+                // Validar que los datos no estén vacíos
+                if (string.IsNullOrEmpty(nom))
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El nombre del semestre no puede estar vacío." });
+                }
+
+                // Validar que el año sea mayor que 0
+                if (anio <= 0)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El año del semestre debe ser mayor que 0." });
+                }
+
+                // Validar que el estado sea 0 o 1
+                if (estado != 0 && estado != 1)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El estado del semestre debe ser 0 (INACTIVO) o 1 (ACTIVO)." });
+                }
+
+                // Crear una instancia de Semestre
                 Semestre st = new Semestre();
                 st.NomSemestre = nom;
                 st.AnioSemestre = anio;
                 st.Estado = estado;
+
+                // Agregar el semestre al contexto y guardar cambios
                 _context.Semestres.Add(st);
                 _context.SaveChanges();
-                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
+
+                // Obtener el estado en formato de texto
+                string estadoTexto = estado == 1 ? "ACTIVO" : "INACTIVO";
+
+                // Devolver una respuesta exitosa junto con los datos ingresados
+                return StatusCode(StatusCodes.Status200OK, new
+                {
+                    respuesta = "Insertado correctamente",
+                    semestre = new
+                    {
+                        Nombre = st.NomSemestre,
+                        Año = st.AnioSemestre,
+                        Estado = estadoTexto
+                    }
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+                // Devolver un mensaje de error en caso de excepción
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
             }
         }
         [HttpPost]
         [Route("EditarEstadoSemestre")]
-        public IActionResult EditarEstadoSemestre(int idSemestre, int nuevoEstado)
+        public IActionResult EditarEstadoSemestre(int? idSemestre, int? nuevoEstado)
         {
             try
             {
-                // Buscar el semestre por IdSemestre
+                if (!idSemestre.HasValue || idSemestre <= 0)
+                {
+                    return BadRequest(new { mensaje = "El ID del semestre no es válido" });
+                }
+
+                if (!nuevoEstado.HasValue || (nuevoEstado != 0 && nuevoEstado != 1))
+                {
+                    return BadRequest(new { mensaje = "El nuevo estado no es válido" });
+                }
+
                 var semestre = _context.Semestres.FirstOrDefault(s => s.IdSemestre == idSemestre);
 
-                // Verificar si el semestre existe
                 if (semestre == null)
                 {
                     return NotFound(new { mensaje = "Semestre no encontrado" });
                 }
 
-                // Actualizar solo el campo Estado
-                semestre.Estado = nuevoEstado;
+                semestre.Estado = nuevoEstado.Value;
                 _context.Semestres.Update(semestre);
                 _context.SaveChanges();
 

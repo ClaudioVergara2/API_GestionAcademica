@@ -49,14 +49,19 @@ namespace API_Notas.Controllers
         {
             try
             {
+                if (_context.Cursos.Any(c => c.RutPersona == rut && c.CodAsignatura == cod && c.Seccion == seccion))
+                {
+                    return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = "Ya existe una sección para el mismo profesor y curso." });
+                }
+
                 Curso cur = new Curso();
                 cur.RutPersona = rut;
                 cur.CodAsignatura = cod;
                 cur.Seccion = seccion;
                 _context.Cursos.Add(cur);
                 _context.SaveChanges();
-                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
 
+                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
             }
             catch (Exception ex)
             {

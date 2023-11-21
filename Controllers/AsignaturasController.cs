@@ -47,18 +47,30 @@ namespace API_Notas.Controllers
         {
             try
             {
+                // Check if any of the input data is empty
+                if (string.IsNullOrEmpty(cod) || string.IsNullOrEmpty(nom))
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", detalle = "Los datos ingresados no pueden estar vacíos." });
+                }
+
+                // Check if the subject code already exists
+                var existingAsignatura = _context.Asignaturas.FirstOrDefault(a => a.CodAsignatura == cod);
+                if (existingAsignatura != null)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", detalle = "El código de asignatura ya está en uso." });
+                }
+
                 Asignatura asg = new Asignatura();
                 asg.CodAsignatura = cod;
-                asg.NomAsignatura = nom; // Asegúrate también de que esta propiedad esté escrita correctamente
-                asg.IdSemestre = idSemestre; // Asume que Asignatura tiene esta propiedad para la clave foránea
-                asg.IdTipoAsignatura = idTipoAsignatura; // Asume que Asignatura tiene esta propiedad para la clave foránea
+                asg.NomAsignatura = nom;
+                asg.IdSemestre = idSemestre;
+                asg.IdTipoAsignatura = idTipoAsignatura;
 
-                // Verifica si los IDs de semestre y tipo asignatura existen
                 var semestreExists = _context.Semestres.Any(s => s.IdSemestre == idSemestre);
                 var tipoAsignaturaExists = _context.TipoAsignaturas.Any(t => t.IdTipoAsignatura == idTipoAsignatura);
                 if (!semestreExists || !tipoAsignaturaExists)
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", detalle = "Semestre o tipo de asignatura no existen" });
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", detalle = "Semestre o tipo de asignatura no existen." });
                 }
 
                 _context.Asignaturas.Add(asg);
@@ -68,7 +80,7 @@ namespace API_Notas.Controllers
             catch (Exception ex)
             {
                 string innerMessage = ex.InnerException != null ? ex.InnerException.Message : "No inner exception";
-                // Considera registrar esta información en un log
+                // Consider logging this information
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", detalle = ex.Message, detalleInterno = innerMessage });
             }
         }

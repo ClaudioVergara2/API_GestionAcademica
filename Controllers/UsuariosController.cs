@@ -82,19 +82,26 @@ namespace API_Notas.Controllers
         public IActionResult InsertarUsuario(string nom, string psw, string rut)
         {
             try
-            {
+            {                
                 var personaExistente = _context.Personas.FirstOrDefault(p => p.RutPersona == rut);
 
                 if (personaExistente == null)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", respuesta = "La persona especificada no existe." });
                 }
+
+                if (personaExistente.IdPerfil != 1 && personaExistente.IdPerfil != 2)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Error", respuesta = "No puede tener usuario siendo estudiante." });
+                }
+
                 Usuario usuario = new Usuario
                 {
                     NomUsuario = nom,
                     Contraseña = psw,
                     RutPersona = rut
                 };
+
                 _context.Add(usuario);
                 _context.SaveChanges();
 

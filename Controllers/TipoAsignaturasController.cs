@@ -44,17 +44,31 @@ namespace API_Notas.Controllers
         public IActionResult InsertarTipoAsignatura(string nomTipo, int cantidad)
         {
             try
-            {
+            {               
+                if (string.IsNullOrEmpty(nomTipo) || cantidad <= 0)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Los datos no pueden estar vacíos." });
+                }
+
+                if (_context.TipoAsignaturas.AsEnumerable().Any(t => t.NomTipoAsignatura.Equals(nomTipo, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Ya existe un tipo de asignatura con ese nombre." });
+                }
+
                 TipoAsignatura tipo = new TipoAsignatura();
                 tipo.NomTipoAsignatura = nomTipo;
                 tipo.CantidadNotas = cantidad;
+
                 _context.TipoAsignaturas.Add(tipo);
                 _context.SaveChanges();
-                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
+
+                int nuevoId = tipo.IdTipoAsignatura;
+
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Insertado correctamente", idTipoAsignatura = nuevoId });
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
             }
         }
 
