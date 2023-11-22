@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using API_Notas.Models;
+using Newtonsoft.Json;
 
 namespace API_Notas.Controllers
 {
@@ -17,54 +18,30 @@ namespace API_Notas.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         [Route("ListadoTipoAsignatura")]
         public IActionResult ListadoTipoAsignatura()
         {
-            List<TipoAsignatura> listado = new List<TipoAsignatura>();
-            var sql = from ta in _context.TipoAsignaturas
-                      select new
-                      {
-                          ta.IdTipoAsignatura,
-                          ta.NomTipoAsignatura,
-                          ta.CantidadNotas
-                      };
-            foreach(var tipoA in sql)
-            {
-                TipoAsignatura tipoAsignatura = new TipoAsignatura();
-                tipoAsignatura.IdTipoAsignatura = tipoA.IdTipoAsignatura;
-                tipoAsignatura.NomTipoAsignatura = tipoA.NomTipoAsignatura;
-                tipoAsignatura.CantidadNotas = tipoA.CantidadNotas;
-                listado.Add(tipoAsignatura);
-            }
-            return Ok(listado);
-        }
-        [HttpPost]
-        [Route("InsertarTipoAsignatura")]
-        public IActionResult InsertarTipoAsignatura(string nomTipo, int cantidad)
-        {
             try
-            {               
-                if (string.IsNullOrEmpty(nomTipo) || cantidad <= 0)
+            {
+                List<TipoAsignatura> listado = new List<TipoAsignatura>();
+                var sql = from ta in _context.TipoAsignaturas
+                          select new
+                          {
+                              ta.IdTipoAsignatura,
+                              ta.NomTipoAsignatura,
+                              ta.CantidadNotas
+                          };
+                foreach (var tipoA in sql)
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Los datos no pueden estar vacíos." });
+                    TipoAsignatura tipoAsignatura = new TipoAsignatura();
+                    tipoAsignatura.IdTipoAsignatura = tipoA.IdTipoAsignatura;
+                    tipoAsignatura.NomTipoAsignatura = tipoA.NomTipoAsignatura;
+                    tipoAsignatura.CantidadNotas = tipoA.CantidadNotas;
+                    listado.Add(tipoAsignatura);
                 }
-
-                if (_context.TipoAsignaturas.AsEnumerable().Any(t => t.NomTipoAsignatura.Equals(nomTipo, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Ya existe un tipo de asignatura con ese nombre." });
-                }
-
-                TipoAsignatura tipo = new TipoAsignatura();
-                tipo.NomTipoAsignatura = nomTipo;
-                tipo.CantidadNotas = cantidad;
-
-                _context.TipoAsignaturas.Add(tipo);
-                _context.SaveChanges();
-
-                int nuevoId = tipo.IdTipoAsignatura;
-
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Insertado correctamente", idTipoAsignatura = nuevoId });
+                return Ok(listado);
             }
             catch (Exception ex)
             {
@@ -72,5 +49,47 @@ namespace API_Notas.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("InsertarTipoAsignatura")]
+        public IActionResult InsertarTipoAsignatura([FromBody] TipoAsignaturaRequest request)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(request.NomTipoAsignatura) || request.CantidadNotas <= 0)
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Los datos no pueden estar vacíos." });
+                }
+
+                if (_context.TipoAsignaturas.AsEnumerable().Any(t => t.NomTipoAsignatura.Equals(request.NomTipoAsignatura, StringComparison.OrdinalIgnoreCase)))
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Ya existe un tipo de asignatura con ese nombre." });
+                }
+
+                TipoAsignatura nuevoTipo = new TipoAsignatura
+                {
+                    NomTipoAsignatura = request.NomTipoAsignatura,
+                    CantidadNotas = request.CantidadNotas
+                };
+
+                _context.TipoAsignaturas.Add(nuevoTipo);
+                _context.SaveChanges();
+
+                return StatusCode(StatusCodes.Status200OK, new
+                {
+                    mensaje = "Insertado correctamente",
+                    idTipoAsignatura = nuevoTipo.IdTipoAsignatura
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
+            }
+        }
+
+        public class TipoAsignaturaRequest
+        {
+            public string NomTipoAsignatura { get; set; }
+            public int CantidadNotas { get; set; }
+        }
     }
 }

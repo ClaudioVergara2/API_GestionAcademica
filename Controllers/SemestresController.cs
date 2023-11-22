@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using API_Notas.Models;
+using Newtonsoft.Json;
 
 namespace API_Notas.Controllers
 {
-    public class SemestresController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class SemestresController : ControllerBase
     {
         private readonly EvaluacionContext _context;
 
@@ -17,109 +18,107 @@ namespace API_Notas.Controllers
         {
             _context = context;
         }
+
         [HttpGet]
         [Route("ListadoSemestre")]
         public IActionResult ListadoSemestre()
         {
-            List<Semestre> listado = new List<Semestre>();
-            var sql = from s in _context.Semestres
-                      select new
-                      {
-                          s.IdSemestre,
-                          s.NomSemestre,
-                          s.AnioSemestre,
-                          s.Estado
-                      };
-            foreach (var se in sql)
+            try
             {
-                Semestre semestre = new Semestre();
-                semestre.NomSemestre = se.NomSemestre;
-                semestre.IdSemestre = semestre.IdSemestre;
-                semestre.AnioSemestre= semestre.AnioSemestre;
-                semestre.Estado = semestre.Estado;
-                listado.Add(semestre);
+                var semestres = _context.Semestres
+                    .Select(s => new
+                    {
+                        s.IdSemestre,
+                        s.NomSemestre,
+                        s.AnioSemestre,
+                        Estado = s.Estado == 1 ? "Activo" : "Inactivo"
+                    })
+                    .ToList();
+
+                return Ok(JsonConvert.SerializeObject(semestres));
             }
-            return Ok(listado);
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
+            }
         }
+
         [HttpPost]
         [Route("InsertarSemestre")]
-        public IActionResult InsertarSemestre(string nom, int anio, int estado)
+        public IActionResult InsertarSemestre([FromBody] SemestreRequest request)
         {
             try
             {
-                // Validar que los datos no estén vacíos
-                if (string.IsNullOrEmpty(nom))
+                if (string.IsNullOrEmpty(request.NomSemestre))
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El nombre del semestre no puede estar vacío." });
                 }
 
-                // Validar que el año sea mayor que 0
-                if (anio <= 0)
+                if (request.AnioSemestre <= 0)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El año del semestre debe ser mayor que 0." });
                 }
 
-                // Validar que el estado sea 0 o 1
-                if (estado != 0 && estado != 1)
+                if (request.Estado != 0 && request.Estado != 1)
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El estado del semestre debe ser 0 (INACTIVO) o 1 (ACTIVO)." });
                 }
 
-                // Crear una instancia de Semestre
-                Semestre st = new Semestre();
-                st.NomSemestre = nom;
-                st.AnioSemestre = anio;
-                st.Estado = estado;
+                var nuevoSemestre = new Semestre
+                {
+                    NomSemestre = request.NomSemestre,
+                    AnioSemestre = request.AnioSemestre,
+                    Estado = request.Estado
+                };
 
-                // Agregar el semestre al contexto y guardar cambios
-                _context.Semestres.Add(st);
+                _context.Semestres.Add(nuevoSemestre);
                 _context.SaveChanges();
 
-                // Obtener el estado en formato de texto
-                string estadoTexto = estado == 1 ? "ACTIVO" : "INACTIVO";
+                string estadoTexto = nuevoSemestre.Estado == 1 ? "ACTIVO" : "INACTIVO";
 
-                // Devolver una respuesta exitosa junto con los datos ingresados
                 return StatusCode(StatusCodes.Status200OK, new
                 {
                     respuesta = "Insertado correctamente",
                     semestre = new
                     {
-                        Nombre = st.NomSemestre,
-                        Año = st.AnioSemestre,
+                        Nombre = nuevoSemestre.NomSemestre,
+                        Año = nuevoSemestre.AnioSemestre,
                         Estado = estadoTexto
                     }
                 });
             }
             catch (Exception ex)
             {
-                // Devolver un mensaje de error en caso de excepción
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
             }
         }
+
         [HttpPost]
         [Route("EditarEstadoSemestre")]
-        public IActionResult EditarEstadoSemestre(int? idSemestre, int? nuevoEstado)
+        public IActionResult EditarEstadoSemestre([FromBody] EditarEstadoSemestreRequest request)
         {
             try
             {
-                if (!idSemestre.HasValue || idSemestre <= 0)
+                // Validation
+                if (request.IdSemestre <= 0)
                 {
                     return BadRequest(new { mensaje = "El ID del semestre no es válido" });
                 }
 
-                if (!nuevoEstado.HasValue || (nuevoEstado != 0 && nuevoEstado != 1))
+                if (request.NuevoEstado != 0 && request.NuevoEstado != 1)
                 {
                     return BadRequest(new { mensaje = "El nuevo estado no es válido" });
                 }
 
-                var semestre = _context.Semestres.FirstOrDefault(s => s.IdSemestre == idSemestre);
+                // Updating state
+                var semestre = _context.Semestres.FirstOrDefault(s => s.IdSemestre == request.IdSemestre);
 
                 if (semestre == null)
                 {
                     return NotFound(new { mensaje = "Semestre no encontrado" });
                 }
 
-                semestre.Estado = nuevoEstado.Value;
+                semestre.Estado = request.NuevoEstado;
                 _context.Semestres.Update(semestre);
                 _context.SaveChanges();
 
@@ -131,5 +130,17 @@ namespace API_Notas.Controllers
             }
         }
 
+        public class SemestreRequest
+        {
+            public string NomSemestre { get; set; }
+            public int AnioSemestre { get; set; }
+            public int Estado { get; set; }
+        }
+
+        public class EditarEstadoSemestreRequest
+        {
+            public int IdSemestre { get; set; }
+            public int NuevoEstado { get; set; }
+        }
     }
 }

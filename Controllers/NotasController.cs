@@ -95,19 +95,15 @@ namespace API_Notas.Controllers
                     return StatusCode(StatusCodes.Status404NotFound, new { mensaje = "Nota no encontrada" });
                 }
 
-                // Validar si el campo de nota está vacío
                 if (nuevaNota == 0.0m)
                 {
-                    // Si el campo estaba lleno anteriormente, reemplazar con 1.0
                     if (notaExistente.Nota1 != null && notaExistente.Nota1 != 0.0m)
                     {
                         notaExistente.Nota1 = 1.0m;
                     }
-                    // Si el campo estaba vacío anteriormente o ya es 1.0, no hacer ningún cambio
                 }
                 else
                 {
-                    // Si el campo no está vacío, actualizar la nota
                     notaExistente.Nota1 = nuevaNota;
                 }
 

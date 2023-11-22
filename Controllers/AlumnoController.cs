@@ -32,26 +32,28 @@ public class AlumnoController : ControllerBase
 
         return Ok(listado);
     }
+
     [HttpPost]
     [Route("InsertarAlumno")]
-    public IActionResult InsertarAlumno(string rutPersona, int idCurso)
+    public IActionResult InsertarAlumno([FromBody] InsertarAlumnoRequest request)
     {
         try
         {
-            if (string.IsNullOrEmpty(rutPersona))
+            if (string.IsNullOrEmpty(request.Nombres) || string.IsNullOrEmpty(request.Apellidos))
             {
-                return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El campo 'rutPersona' no puede estar vacío" });
+                return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "Los campos 'nombres' y 'apellidos' no pueden estar vacíos" });
             }
 
-            if (idCurso <= 0)
+            if (request.IdCurso <= 0)
             {
                 return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El campo 'idCurso' no puede estar vacío" });
             }
 
             Alumno alumno = new Alumno
             {
-                RutPersona = rutPersona,
-                IdCurso = idCurso
+                Nombres = request.Nombres,
+                Apellidos = request.Apellidos,
+                IdCurso = request.IdCurso
             };
 
             _context.Alumnos.Add(alumno);
@@ -65,6 +67,33 @@ public class AlumnoController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = innerMessage });
         }
     }
+
+    public class InsertarAlumnoRequest
+    {
+        public string Nombres { get; set; }
+        public string Apellidos { get; set; }
+        public int IdCurso { get; set; }
+    }
+
+    [HttpGet]
+    [Route("ListadoCursos")]
+    public IActionResult ListadoCursos()
+    {
+        var listado = _context.Cursos
+            .Include(c => c.CodAsignaturaNavigation) 
+            .Select(c => new CursoDTO
+            {
+                IdCurso = c.IdCurso,
+                RutPersona = c.RutPersona,
+                CodAsignatura = c.CodAsignatura,
+                NomAsignatura = c.CodAsignaturaNavigation.NomAsignatura, 
+                Seccion = c.Seccion
+            })
+            .ToList();
+
+        return Ok(listado);
+    }
+
     [HttpPost]
     [Route("EliminarAlumno")]
     public IActionResult EliminarAlumno(int idAlumno)

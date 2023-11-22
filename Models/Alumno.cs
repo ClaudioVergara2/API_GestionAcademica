@@ -6,7 +6,9 @@ namespace API_Notas.Models;
 public partial class Alumno
 {
     public int IdAlumno { get; set; }
-
+    public string Nombres { get; set; }
+    public string Apellidos { get; set; }
+    public bool Habilitado { get; set; } = true;
     public string RutPersona { get; set; } = null!;
 
     public int IdCurso { get; set; }

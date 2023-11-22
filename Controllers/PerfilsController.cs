@@ -25,39 +25,67 @@ namespace API_Notas.Controllers
         [Route("ListadoPerfiles")]
         public IActionResult ListadoPerfiles()
         {
-            List<Perfil> listado = new List<Perfil>();
-            var sql = from per in _context.Perfils
-                      select new
-                      {
-                          per.IdPerfil,
-                          per.NomPerfil,
-                      };
-            foreach (var perf in sql)
-            {
-                Perfil perfil = new Perfil();
-                perfil.IdPerfil = perf.IdPerfil;
-                perfil.NomPerfil = perf.NomPerfil;
-                listado.Add(perfil);
-            }
-            return Ok(listado);
+            List<Perfil> listado = _context.Perfils
+                .Select(per => new Perfil
+                {
+                    IdPerfil = per.IdPerfil,
+                    NomPerfil = per.NomPerfil
+                })
+                .ToList();
+
+            return Ok(JsonConvert.SerializeObject(listado));
         }
 
         [HttpPost]
         [Route("InsertarPerfil")]
-        public IActionResult InsertarPerfil(string nom)
+        public IActionResult InsertarPerfil([FromBody] PerfilRequest request)
         {
             try
             {
-                Perfil perfil = new Perfil();
-                perfil.NomPerfil = nom;
-                _context.Perfils.Add(perfil);
+                if (string.IsNullOrEmpty(request.NomPerfil))
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new { mensaje = "El nombre del perfil no puede estar vacío." });
+                }
+
+                var nuevoPerfil = new Perfil
+                {
+                    NomPerfil = request.NomPerfil
+                };
+
+                _context.Perfils.Add(nuevoPerfil);
                 _context.SaveChanges();
-                return StatusCode(StatusCodes.Status200OK, new { respuesta = "Insertado correctamente" });
+
+                var response = new InsertarPerfilResponse
+                {
+                    Respuesta = "Insertado correctamente",
+                    Perfil = new PerfilResponse
+                    {
+                        Nombre = nuevoPerfil.NomPerfil
+                    }
+                };
+
+                return Ok(response);
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Error", respuesta = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = "Error", respuesta = ex.Message });
             }
+        }
+
+        public class InsertarPerfilResponse
+        {
+            public string Respuesta { get; set; }
+            public PerfilResponse Perfil { get; set; }
+        }
+
+        public class PerfilResponse
+        {
+            public string Nombre { get; set; }
+        }
+
+        public class PerfilRequest
+        {
+            public string NomPerfil { get; set; }
         }
     }
 }

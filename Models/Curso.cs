@@ -22,5 +22,6 @@ public class CursoDTO
     public int IdCurso { get; set; }
     public string RutPersona { get; set; }
     public string CodAsignatura { get; set; }
+    public string NomAsignatura { get; set; }
     public int Seccion { get; set; }
 }
